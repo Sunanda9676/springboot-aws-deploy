@@ -1,6 +1,9 @@
-FROM eclipse-temurin:17-jdk-alpine
-RUN apk add curl
+FROM openjdk:8-jdk-alpine
 VOLUME /tmp
-EXPOSE 8080
-ADD target/springboot-aws-deploy-service.jar springboot-aws-deploy-service.jar
-ENTRYPOINT ["java","-jar","/springboot-aws-deploy-service.jar"]
+ARG JAVA_OPTS
+ENV JAVA_OPTS=$JAVA_OPTS
+COPY target/springboot-aws-deploy-0.0.1-SNAPSHOT.jar springbootawsdeploymain.jar
+EXPOSE 5000
+ENTRYPOINT exec java $JAVA_OPTS -jar springbootawsdeploymain.jar
+# For Spring-Boot project, use the entrypoint below to reduce Tomcat startup time.
+#ENTRYPOINT exec java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar springbootawsdeploymain.jar

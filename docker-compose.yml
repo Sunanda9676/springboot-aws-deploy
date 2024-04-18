@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+  springbootawsdeploymain:
+    image: springbootawsdeploymain
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 5000:5000
